@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "podagent-os"
+version = "0.1.0"
+description = "AI-powered podcast production pipeline"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+    "click>=8.1",
+    "pydantic>=2.0",
+    "ruamel.yaml>=0.18",
+    "rich>=13.0",
+    "tenacity>=8.0",
+]
+
+[project.optional-dependencies]
+ingestion = [
+    "faster-whisper>=1.0",
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "soundfile>=0.12",
+]
+editing = [
+    "opentimelineio>=0.17",
+]
+mastering = [
+    "mutagen>=1.47",
+    "Pillow>=10.0",
+    "markdown>=3.5",
+]
+llm = [
+    "anthropic>=0.30",
+]
+all = ["podagent-os[ingestion,editing,mastering,llm]"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
+[project.scripts]
+podagent = "podagent.cli.main:cli"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/podagent"]
